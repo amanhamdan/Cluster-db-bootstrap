@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  clusterDB-Bootstrapper:
+    image: clusterdb-bootstrapper:latest
+    networks:
+      - clusterDB-net
+    environment:
+      - nodesList=http://localhost:8080/api/v1,http://localhost:8081/api/v1,http://localhost:8082/api/v1,http://localhost:8083/api/v1,http://localhost:8084/api/v1
+      - numberOfNodes=5
+      - server.port=9090
+    ports:
+     - "9090:9090"
+  clusterDB-node-0:
+    image: clusterdb-node:latest
+    depends_on:
+      - clusterDB-Bootstrapper
+    networks:
+      - clusterDB-net
+    environment:
+      - nodeID=0
+      - server.port=8080
+    ports:
+     - "8080:8080"
+  clusterDB-node-1:
+    image: clusterdb-node:latest
+    depends_on:
+      - clusterDB-Bootstrapper
+    networks:
+      - clusterDB-net
+    environment:
+      - nodeID=1
+      - server.port=8081
+    ports:
+     - "8081:8081"
+  clusterDB-node-2:
+    image: clusterdb-node:latest
+    depends_on:
+      - clusterDB-Bootstrapper
+    networks:
+      - clusterDB-net
+    environment:
+      - nodeID=2
+      - server.port=8082
+    ports:
+     - "8082:8082"
+  clusterDB-node-3:
+    image: clusterdb-node:latest
+    depends_on:
+      - clusterDB-Bootstrapper
+    networks:
+      - clusterDB-net
+    environment:
+      - nodeID=3
+      - server.port=8083
+    ports:
+     - "8083:8083"
+  clusterDB-node-4:
+    image: clusterdb-node:latest
+    depends_on:
+      - clusterDB-Bootstrapper
+    networks:
+      - clusterDB-net
+    environment:
+      - nodeID=4
+      - server.port=8084
+    ports:
+     - "8084:8084"     
+networks:
+  clusterDB-net:
+  
